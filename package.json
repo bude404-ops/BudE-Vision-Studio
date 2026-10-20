@@ -1,0 +1,14 @@
+{
+  "name": "com.bude404.visionstudio",
+  "version": "0.1.0",
+  "displayName": "Bude Studio",
+  "description": "AI-powered beginner-friendly game creation toolkit for Unity. Describe a game, plan it, generate starter assets and maps, and chat with Bigfoot in-editor.",
+  "unity": "6000.6",
+  "author": {
+    "name": "BudE404 & BIGagent404",
+    "url": "https://bigfoot404.biz"
+  },
+  "documentationUrl": "https://github.com/bude404-ops/BudE-Vision-Studio",
+  "changelogUrl": "https://github.com/bude404-ops/BudE-Vision-Studio/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/bude404-ops/BudE-Vision-Studio/blob/main/LICENSE"
+}

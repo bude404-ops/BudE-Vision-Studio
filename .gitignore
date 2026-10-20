@@ -1,0 +1,22 @@
+# Unity-generated folders this package never needs committed
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+MemoryCaptures/
+
+# Unity meta files for ignored folders are noise too
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Never commit local secrets that belong to a game project (not this package repo)
+# (kept here as a reminder: Assets/BudeStudio/ is a GAME-PROJECT path, not present
+# in this package repository, but the rule stands wherever you see it.)

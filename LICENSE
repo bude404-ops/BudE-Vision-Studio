@@ -1,0 +1,9 @@
+BudE Vision Studio
+Copyright (c) 2026 Bigfoot404 LLC. All rights reserved.
+
+This is a private internal toolkit for Bigfoot404 LLC and its collaborators
+(BudE404). Not licensed for distribution outside the bude404-ops organization.
+
+The Bigfoot agent API key and any other credentials are never part of this
+repository. Each game project stores its own key locally in
+Assets/BudeStudio/BudeStudioSettings.asset, which must remain gitignored.
