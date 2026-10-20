@@ -33,6 +33,12 @@ namespace BudeStudio.EditorTools
         [Tooltip("Categories offered by the importer. Comma separated.")]
         public string categories = "Characters,Props,Environment,UI,Audio";
 
+        [Header("Studio Link (Bigfoot builds in Unity)")]
+        [Tooltip("Editor polls the Bigfoot conversation over normal HTTPS - no relay, no tunnel.")]
+        public bool studioLinkEnabled = false;
+        [Tooltip("Off: each build command waits for your EXECUTE click. On: runs immediately.")]
+        public bool studioLinkAutoRun = false;
+
         [Header("Backups")]
         public string backupFolderName = "BudeStudioBackups";
 

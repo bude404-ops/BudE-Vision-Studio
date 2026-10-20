@@ -121,5 +121,56 @@ namespace BudeStudio.Tests
             var cats = settings.CategoryList();
             CollectionAssert.AreEqual(new[] { "Characters", "Props", "UI" }, cats);
         }
+
+        // ---------- Studio Link ----------
+
+        [Test]
+        public void StudioLink_ExtractExecPayload_FindsFencedJson()
+        {
+            string msg = "Here's the build:\n```bude-exec\n{\"ops\":[{\"op\":\"primitive\",\"type\":\"Cube\"}]}\n```\nDone!";
+            string payload = StudioLinkService.ExtractExecPayload(msg);
+            Assert.IsNotNull(payload);
+            Assert.IsTrue(payload.StartsWith("{"), "payload should be the JSON between fences: " + payload);
+            Assert.IsTrue(payload.Contains("\"ops\""));
+            Assert.IsFalse(payload.Contains("```"), "no fence markers inside payload");
+        }
+
+        [Test]
+        public void StudioLink_ExtractExecPayload_ToleratesMissingEndFence()
+        {
+            string msg = "text ```bude-exec\n{\"ops\":[]}";
+            Assert.AreEqual("{\"ops\":[]}", StudioLinkService.ExtractExecPayload(msg));
+        }
+
+        [Test]
+        public void StudioLink_ExtractExecPayload_ReturnsNullWhenNoFence()
+        {
+            Assert.IsNull(StudioLinkService.ExtractExecPayload("just a normal chat reply"));
+            Assert.IsNull(StudioLinkService.ExtractExecPayload(null));
+            Assert.IsNull(StudioLinkService.ExtractExecPayload(""));
+        }
+
+        [Test]
+        public void StudioLink_FindNewestExecPayload_PicksNewestAssistantCommand()
+        {
+            string json = "{\"messages\":[" +
+                "{\"role\":\"user\",\"content\":\"build me a hill\"}," +
+                "{\"role\":\"assistant\",\"content\":\"```bude-exec\\n{\\\"ops\\\":[{\\\"op\\\":\\\"primitive\\\"}]}\\n```\"}," +
+                "{\"role\":\"assistant\",\"content\":\"all done, review it\"}," +
+                "{\"role\":\"assistant\",\"content\":\"```bude-exec\\n{\\\"ops\\\":[{\\\"op\\\":\\\"sprite\\\"}]}\\n```\"}" +
+                "]}";
+            string payload = StudioLinkService.FindNewestExecPayload(json);
+            Assert.IsNotNull(payload);
+            Assert.IsTrue(payload.Contains("sprite"), "newest command must win, got: " + payload);
+        }
+
+        [Test]
+        public void StudioLink_FindNewestExecPayload_SkipsHiddenMessages()
+        {
+            string json = "{\"messages\":[" +
+                "{\"role\":\"assistant\",\"content\":\"```bude-exec\\n{\\\"ops\\\":[]}\\n```\",\"hidden\":true}" +
+                "]}";
+            Assert.IsNull(StudioLinkService.FindNewestExecPayload(json));
+        }
     }
 }

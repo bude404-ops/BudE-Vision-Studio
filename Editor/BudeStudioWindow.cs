@@ -39,6 +39,7 @@ namespace BudeStudio.EditorTools
         {
             BudeStudioSettings.LoadOrCreate();
             ProjectState.Load();
+            StudioLinkService.EnsurePolling();
             _plan = FindAsset<GamePlan>();
             _bible = FindAsset<AssetBible>();
         }
@@ -373,6 +374,8 @@ namespace BudeStudio.EditorTools
             _chatScroll = EditorGUILayout.BeginScrollView(_chatScroll, GUILayout.MinHeight(120));
             EditorGUILayout.TextArea(_chatReply ?? "", GUILayout.ExpandHeight(true));
             EditorGUILayout.EndScrollView();
+
+            StudioLinkService.DrawChatSection();
         }
 
         // ------------------------------------------------- SETTINGS
@@ -398,6 +401,8 @@ namespace BudeStudio.EditorTools
             settings.backupFolderName = EditorGUILayout.TextField("Backup folder", settings.backupFolderName);
             if (BigButton("Back up project now", "Zips Assets + ProjectSettings into a timestamped file next to the project.", 30))
                 ProjectBackup.Backup();
+
+            StudioLinkService.DrawSettingsSection();
 
             EditorGUILayout.Space(6);
             EditorGUILayout.HelpBox(
